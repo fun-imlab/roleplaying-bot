@@ -11,7 +11,7 @@ import os
 
 # --- Streamlit UI ---
 st.set_page_config(page_title="角先生なりきりChatBot", layout="wide")
-st.title("🎓 RAG講義チャットボット")
+st.title("🎓 角先生なりきりChatBot")
 
 
 load_dotenv()  # .env を読み込む
