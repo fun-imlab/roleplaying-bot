@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 import os
 
 # --- Streamlit UI ---
-st.set_page_config(page_title="RAG講義チャット", layout="wide")
+st.set_page_config(page_title="角先生なりきりChatBot", layout="wide")
 st.title("🎓 RAG講義チャットボット")
 
 
