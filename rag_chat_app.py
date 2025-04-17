@@ -30,9 +30,14 @@ def load_vectorstore():
     documents = loader.load()
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     docs = splitter.split_documents(documents)
+
     embedding = OpenAIEmbeddings()
-    vectordb = Chroma.from_documents(docs, embedding=embedding, persist_directory=".chroma")
+    
+    # ✅ 修正箇所：persist_directory を削除（＝インメモリ動作に）
+    vectordb = Chroma.from_documents(docs, embedding=embedding)
+    
     return vectordb
+
 
 vectordb = load_vectorstore()
 retriever = vectordb.as_retriever()
