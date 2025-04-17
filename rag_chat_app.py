@@ -1,7 +1,7 @@
 import streamlit as st
 from langchain_community.chat_models import ChatOpenAI
 from langchain_community.document_loaders import TextLoader
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -34,8 +34,8 @@ def load_vectorstore():
     embedding = OpenAIEmbeddings()
     
     # ✅ 修正箇所：persist_directory を削除（＝インメモリ動作に）
-    vectordb = Chroma.from_documents(docs, embedding=embedding)
-    
+    vectordb = FAISS.from_documents(docs, embedding=embedding)
+        
     return vectordb
 
 

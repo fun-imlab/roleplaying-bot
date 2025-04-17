@@ -5,3 +5,4 @@ openai
 chromadb
 tiktoken
 python-dotenv
+faiss-cpu
