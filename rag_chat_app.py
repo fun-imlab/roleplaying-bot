@@ -8,6 +8,7 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 import gspread
+import json  
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 import base64
