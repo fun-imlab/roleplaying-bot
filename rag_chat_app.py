@@ -21,7 +21,19 @@ SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive"
 ]
-creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
+
+#ローカルで動かす時は""credential.json"を使う
+#creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
+
+#Streamlitを使用する場合はgithub上に"credentials.json"はignoreしてるので以下で動かす（streamlit Cloudで定義）
+if isinstance(st.secrets["GOOGLE_CREDS"], str):
+    creds_dict = json.loads(st.secrets["GOOGLE_CREDS"])
+else:
+    creds_dict = dict(st.secrets["GOOGLE_CREDS"])
+
+creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
+
+
 gc = gspread.authorize(creds)
 
 # --- 書き込み先スプレッドシートIDを指定（URLの/d/と/editの間の部分）---
