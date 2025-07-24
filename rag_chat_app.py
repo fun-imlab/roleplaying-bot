@@ -153,7 +153,7 @@ if submitted and query:
         })
 
         # 現在時刻を日本時間で取得（例: 2024-07-24 20:25:33）
-        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         # Google Sheetsに「時刻」と「質問文」だけを追加
         worksheet.append_row([now_str, query])
 
