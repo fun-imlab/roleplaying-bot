@@ -10,3 +10,4 @@ faiss-cpu
 Pillow
 gspread
 google-auth
+pytz

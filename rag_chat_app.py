@@ -11,10 +11,15 @@ import gspread
 import json  
 from google.oauth2.service_account import Credentials
 from datetime import datetime
+import pytz
 import base64
 import os
 import math
 
+#時刻を日本標準に
+japan = pytz.timezone('Asia/Tokyo')
+now_japan = datetime.now(japan)
+now_str = now_japan.strftime("%Y-%m-%d %H:%M:%S")
 
 
 # --- Google Sheets認証セットアップ（1回だけでOK） ---
