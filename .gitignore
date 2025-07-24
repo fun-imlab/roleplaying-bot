@@ -1,1 +1,11 @@
 .env
+# Python仮想環境
+venv/
+.venv/
+
+# Pythonキャッシュ
+__pycache__/
+
+# Google API認証情報など秘密ファイル
+credentials.json
+*.json

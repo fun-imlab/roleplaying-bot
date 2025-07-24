@@ -8,3 +8,5 @@ tiktoken
 python-dotenv
 faiss-cpu
 Pillow
+gspread
+google-auth

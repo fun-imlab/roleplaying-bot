@@ -7,9 +7,28 @@ from langchain.chains import RetrievalQA
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
+import gspread
+from google.oauth2.service_account import Credentials
+from datetime import datetime
 import base64
 import os
 import math
+
+
+
+# --- Google Sheets認証セットアップ（1回だけでOK） ---
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
+creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
+gc = gspread.authorize(creds)
+
+# --- 書き込み先スプレッドシートIDを指定（URLの/d/と/editの間の部分）---
+SPREADSHEET_ID = "1C3roVQgqCNQCjEsZCcI7zY1UXEp5fboQDAa9ERDufFY"
+sh = gc.open_by_key(SPREADSHEET_ID)
+worksheet = sh.sheet1  # 1枚目のシートを使う
+
 
 # --- Streamlit UI ---
 st.set_page_config(page_title="人工知能基礎 角先生Bot", layout="wide")
@@ -106,7 +125,6 @@ with st.form(key="chat_form", clear_on_submit=True):
     query = st.text_input("💬 講義に基づいて質問してみてください")
     submitted = st.form_submit_button("送信")
 
-# --- 回答処理＆履歴保存 ---
 if submitted and query:
     with st.spinner("考え中..."):
         result = qa(query)
@@ -115,6 +133,11 @@ if submitted and query:
             "answer": result["result"],
             "sources": [doc.page_content for doc in result["source_documents"]]
         })
+
+        # 現在時刻を日本時間で取得（例: 2024-07-24 20:25:33）
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # Google Sheetsに「時刻」と「質問文」だけを追加
+        worksheet.append_row([now_str, query])
 
 # --- チャット履歴を新しい順に上から表示する ---
 for idx, chat in reversed(list(enumerate(st.session_state.history))):
